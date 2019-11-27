@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>game1</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      table tr td {
+        border: 1px solid black;
+        width: 50px;
+        height: 50px;
+      }
+      .red {
+        background-color: red;
+      }
+      .green {
+        background-color: green;
+      }
+    </style>
+    <script>
+      let color = "red";
+      function boxClick(boxId) {
+        if (didColorWin(color)) {
+          alert(" sorry, but " + color + " already won!!!!");
+          return;
+        }
+
+        const box = document.getElementById("box" + boxId);
+        if (box.classList.contains("red") || box.classList.contains("green")) {
+          alert("sorry this box is already used!!!");
+          return;
+        }
+        box.classList.add(color);
+
+        if (didColorWin(color)) {
+          alert(color + " VICTORY!!!!");
+          return;
+        }
+
+        // change color
+        if (color === "red") {
+          color = "green";
+        } else {
+          color = "red";
+        }
+      }
+      function checkWinningCords(color, p1, p2, p3) {
+        return (
+          document.getElementById("box" + p1).classList.contains(color) &&
+          document.getElementById("box" + p2).classList.contains(color) &&
+          document.getElementById("box" + p3).classList.contains(color)
+        );
+      }
+      function didColorWin(color) {
+        return (
+          // left-right
+          checkWinningCords(color, 1, 2, 3) ||
+          checkWinningCords(color, 4, 5, 6) ||
+          checkWinningCords(color, 7, 8, 9) ||
+          // up-down
+          checkWinningCords(color, 1, 4, 7) ||
+          checkWinningCords(color, 2, 5, 8) ||
+          checkWinningCords(color, 3, 6, 9) ||
+          // XXX
+          checkWinningCords(color, 1, 5, 9) ||
+          checkWinningCords(color, 3, 5, 7)
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td onclick="boxClick(1)" id="box1"></td>
+        <td onclick="boxClick(2)" id="box2"></td>
+        <td onclick="boxClick(3)" id="box3"></td>
+      </tr>
+      <tr>
+        <td onclick="boxClick(4)" id="box4"></td>
+        <td onclick="boxClick(5)" id="box5"></td>
+        <td onclick="boxClick(6)" id="box6"></td>
+      </tr>
+      <tr>
+        <td onclick="boxClick(7)" id="box7"></td>
+        <td onclick="boxClick(8)" id="box8"></td>
+        <td onclick="boxClick(9)" id="box9"></td>
+      </tr>
+    </table>
+  </body>
+</html>
